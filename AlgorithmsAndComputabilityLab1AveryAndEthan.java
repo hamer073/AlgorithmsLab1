@@ -1,4 +1,5 @@
 import node_helper.IntNode.*;
+import java.util.Arrays;
 
 class NPermutations {
    long[][] outputArray;
@@ -8,8 +9,11 @@ class NPermutations {
   public NPermutations(){}
 
   public static void main(String[] args) {
+    long startTime = System.currentTimeMillis();
     NPermutations program = new NPermutations();
     program.entryPoint(Integer.parseInt(args[0]));
+    long endTime = System.currentTimeMillis();
+    System.out.println(endTime - startTime);
   }
 
   public void entryPoint(int n){
@@ -22,7 +26,7 @@ class NPermutations {
     node_helper.IntNode zeroIntNode = new node_helper.IntNode(0, null);
     recursionInsanity(zeroIntNode, initialArray);
     for (long[] permutation : outputArray) {
-      System.out.println(permutation.toString());
+      System.out.println(Arrays.toString(permutation));
     }
   }
 
@@ -63,15 +67,13 @@ class NPermutations {
   }
 
   private long[] getPermutation(node_helper.IntNode leaf, long[] values, int index){
-    if(leaf.getParent().getParent() == null) {
+    if(leaf.getParent() == null) {
       return values;
     }
     else {
       values[index] = leaf.getValue();
-      getPermutation(leaf.getParent(), values, index + 1);
+      return getPermutation(leaf.getParent(), values, index + 1);
     }
-    System.out.println("We're not supposed to be here");
-    return new long[0];
   }
 
   //TODO: implement factorial

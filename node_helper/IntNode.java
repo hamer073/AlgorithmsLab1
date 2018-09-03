@@ -9,9 +9,10 @@ public class IntNode{
     this.value = value;
     this.parent = parent;
 
-    parent.addChild(this);
+    //parent.addChild(this);
   }
 
+/*
   private void addChild(IntNode newChild){
     IntNode[] tempArray = new IntNode[this.children.length + 1];
     for(int i = 0; i < this.children.length; i++){
@@ -20,9 +21,10 @@ public class IntNode{
     tempArray[tempArray.length - 1] = newChild;
     this.children = tempArray;
   }
+  */
 
   public IntNode getParent(){ return this.parent; }
-  public IntNode[] getChildren(){ return this.children; }
+  //public IntNode[] getChildren(){ return this.children; }
   public int getValue(){ return this.value; }
   public void setValue(int newValue){ this.value = newValue; }
 }
