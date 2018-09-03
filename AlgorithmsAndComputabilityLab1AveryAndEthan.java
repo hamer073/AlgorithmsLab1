@@ -1,66 +1,81 @@
+import node_helper.IntNode.*;
+
 class NPermutations {
-  int[][] outputArray;
+   long[][] outputArray;
+  int nextOutputIndex = 0;
+  int numberOfElements;
+
+  public NPermutations(){}
 
   public static void main(String[] args) {
-    entryPoint(Integer.parseInt(args[0]));
+    NPermutations program = new NPermutations();
+    program.entryPoint(Integer.parseInt(args[0]));
   }
 
-  public entryPoint(int numberOfElements){
+  public void entryPoint(int n){
+    numberOfElements = n;
     long numberOfPermutations = factorial(numberOfElements);
-    outputArray = new int[][numberOfPermutations];
+    outputArray = new long[(int) numberOfPermutations][numberOfElements];
 
-    int[] initialArray = generateInitialArray(numberOfElements);
+    int[] initialArray = generateInitialArray();
 
-    Node zeroNode = new Node(0, null);
-    recursionInsanity(zeroNode, initialArray);
-    for (int[] permutation : outputArray) {
+    node_helper.IntNode zeroIntNode = new node_helper.IntNode(0, null);
+    recursionInsanity(zeroIntNode, initialArray);
+    for (long[] permutation : outputArray) {
       System.out.println(permutation.toString());
     }
   }
 
-  private void recursionInsanity(Node parent, int[] remainingElements){
+  private void recursionInsanity(node_helper.IntNode parent, int[] remainingElements){
 
     // base case
     if (remainingElements.length == 0){
-      outputArray.append(getParentsAndChild(parent, new int[]));
+      outputArray[nextOutputIndex] = getPermutation(parent, new long[numberOfElements], 0);
+      nextOutputIndex++;
     }
 
     else {
-      for(int element:remainingElements){
-        tempArray[remainingElements.length-1];
-        Node node = new Node(element, parent);
+      for(int element : remainingElements){
+        int[] smallerArray = new int[remainingElements.length-1];
+        node_helper.IntNode node = new node_helper.IntNode(element, parent);
 
-        // create array one element smaller
-        for(int tempElement : remainingElements){
-          if(tempElement != element){ tempArray.append(tempElement); }
+        // create array without current element
+        int smallCounter = 0;
+        for (int i = 0; i < remainingElements.length; i++) {
+          if(remainingElements[i] != element) {
+            smallerArray[smallCounter] = remainingElements[i];
+            smallCounter++;
+          }
         }
-        recursionInsanity(node, tempArray);
+        recursionInsanity(node, smallerArray);
       }
     }
 
   }
 
-  private int[] generateInitialArray(int numberOfElements){
-    int[] result;
+  private int[] generateInitialArray(){
+    int[] result = new int[numberOfElements];
 
-    for(int i = 1; i <= numberOfElements; i++){
-      result.append(i);
+    for(int i = 0; i < numberOfElements; i++){
+      result[i] = i + 1;
     }
     return result;
   }
 
-  private int[] getParentsAndChild(Node leaf, int[] values){
+  private long[] getPermutation(node_helper.IntNode leaf, long[] values, int index){
     if(leaf.getParent().getParent() == null) {
       return values;
     }
     else {
-      values.append(leaf.getValue());
-      getParentsAndChild(leaf.getParent(), values);
+      values[index] = leaf.getValue();
+      getPermutation(leaf.getParent(), values, index + 1);
     }
+    System.out.println("We're not supposed to be here");
+    return new long[0];
   }
 
   //TODO: implement factorial
-  private int factorial(n) {
+  private long factorial(int n) {
     long product = 1;
     for(int i = n; i > 1; i--){
       product = product * i;
