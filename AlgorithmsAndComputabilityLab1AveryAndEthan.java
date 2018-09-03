@@ -2,24 +2,33 @@ class NPermutations {
   int[][] outputArray;
 
   public entryPoint(int numberOfElements){
-    int numberOfPermutations = n!;
+    int numberOfPermutations = numberOfElements!;
     outputArray = new int[][numberOfPermutations];
 
-    int[] initialArray = generateInitialArray(n);
+    int[] initialArray = generateInitialArray(numberOfElements);
+
+    Node zeroNode = new Node(0, null);
+    recursionInsanity(zeroNode, initialArray);
   }
 
-  private void recursionInsanity(Node parent, int[] remainingElements){
-    if (remainingElements.length == 0) { return void; }
+  private int[] recursionInsanity(Node parent, int[] remainingElements){
+
+    // base case
+    if (remainingElements.length == 0){ return /* array */; }
+
     else {
       for(int element:remainingElements){
         tempArray[remainingElements.length-1];
         Node node = new Node(element, parent);
+
+        // create array one element smaller
         for(int tempElement : remainingElements){
           if(tempElement != element){ tempArray.append(tempElement); }
         }
         recursionInsanity(node, tempArray);
       }
     }
+
   }
 
   private int[][] generateAllPermutations(int numberOfElements){
