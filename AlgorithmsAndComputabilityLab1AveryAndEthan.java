@@ -1,6 +1,10 @@
 class NPermutations {
   int[][] outputArray;
 
+  public static void main(String[] args) {
+    entryPoint(Integer.parseInt(args[0]));
+  }
+
   public entryPoint(int numberOfElements){
     long numberOfPermutations = factorial(numberOfElements);
     outputArray = new int[][numberOfPermutations];
