@@ -2,19 +2,24 @@ class NPermutations {
   int[][] outputArray;
 
   public entryPoint(int numberOfElements){
-    int numberOfPermutations = numberOfElements!;
+    long numberOfPermutations = factorial(numberOfElements);
     outputArray = new int[][numberOfPermutations];
 
     int[] initialArray = generateInitialArray(numberOfElements);
 
     Node zeroNode = new Node(0, null);
     recursionInsanity(zeroNode, initialArray);
+    for (int[] permutation : outputArray) {
+      System.out.println(permutation.toString());
+    }
   }
 
-  private int[] recursionInsanity(Node parent, int[] remainingElements){
+  private void recursionInsanity(Node parent, int[] remainingElements){
 
     // base case
-    if (remainingElements.length == 0){ return /* array */; }
+    if (remainingElements.length == 0){
+      outputArray.append(getParentsAndChild(parent, new int[]));
+    }
 
     else {
       for(int element:remainingElements){
@@ -31,12 +36,6 @@ class NPermutations {
 
   }
 
-  private int[][] generateAllPermutations(int numberOfElements){
-
-    outputArray.append(generateInitialArray(numberOfElements));
-
-  }
-
   private int[] generateInitialArray(int numberOfElements){
     int[] result;
 
@@ -46,8 +45,23 @@ class NPermutations {
     return result;
   }
 
+  private int[] getParentsAndChild(Node leaf, int[] values){
+    if(leaf.getParent().getParent() == null) {
+      return values;
+    }
+    else {
+      values.append(leaf.getValue());
+      getParentsAndChild(leaf.getParent(), values);
+    }
+  }
+
+  //TODO: implement factorial
   private int factorial(n) {
-    //TODO: implement factorial
+    long product = 1;
+    for(int i = n; i > 1; i--){
+      product = product * i;
+    }
+    return product;
   }
 
 }
