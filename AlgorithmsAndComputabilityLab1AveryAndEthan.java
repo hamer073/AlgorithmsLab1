@@ -2,18 +2,26 @@ import node_helper.IntNode.*;
 import java.util.Arrays;
 
 class NPermutations {
-   long[][] outputArray;
+  long[][] outputArray;
   int nextOutputIndex = 0;
   int numberOfElements;
+  static long counter = 0;
 
   public NPermutations(){}
 
   public static void main(String[] args) {
+
+    int n = Integer.parseInt(args[0]);
     long startTime = System.currentTimeMillis();
+
     NPermutations program = new NPermutations();
-    program.entryPoint(Integer.parseInt(args[0]));
+    program.entryPoint(n);
+
     long endTime = System.currentTimeMillis();
-    System.out.println(endTime - startTime);
+
+    System.out.println("Total runtime: " + (endTime - startTime) + " ms");
+    System.out.println("Expected lines printed (n!): " + factorial(n));
+    System.out.println("Actual lines printed (counter var): " + NPermutations.counter);
   }
 
   public void entryPoint(int n){
@@ -27,9 +35,10 @@ class NPermutations {
     recursionInsanity(zeroIntNode, initialArray);
     for (long[] permutation : outputArray) {
       System.out.println(Arrays.toString(permutation));
+      counter++;
     }
   }
-
+//TODO: implement factorial
   private void recursionInsanity(node_helper.IntNode parent, int[] remainingElements){
 
     // base case
@@ -76,8 +85,7 @@ class NPermutations {
     }
   }
 
-  //TODO: implement factorial
-  private long factorial(int n) {
+  static private long factorial(int n) {
     long product = 1;
     for(int i = n; i > 1; i--){
       product = product * i;
